@@ -15,4 +15,6 @@
   - Uses [SSB binary field encodings (SSB-BFE)](https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings-spec)
 - [Subset replication RPCs](https://github.com/ssb-ngi-pointer/ssb-subset-replication-spec)
 - [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec)
+- [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec)
+
 - [Changes in JS land for partial replication](https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-impl-spec)
