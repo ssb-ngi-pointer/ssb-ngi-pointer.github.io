@@ -19,3 +19,9 @@ Other usages of meta feeds:
 
 - [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec)
 - [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec)
+
+## Videos
+
+- [Rooms 2.0](https://www.youtube.com/watch?v=W5p0y_MWwDE)
+- [Netsim](https://www.youtube.com/watch?v=JbmUSSH6v1w)
+- [SSB DB2, JITDB, BIPF](https://www.youtube.com/watch?v=efzJheWQey8)
