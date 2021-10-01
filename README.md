@@ -22,6 +22,7 @@ Other usages of meta feeds:
 
 ## Videos
 
-- [Rooms 2.0](https://www.youtube.com/watch?v=W5p0y_MWwDE)
-- [Netsim](https://www.youtube.com/watch?v=JbmUSSH6v1w)
-- [SSB DB2, JITDB, BIPF](https://www.youtube.com/watch?v=efzJheWQey8)
+- [Rooms 2.0](https://hooktube.com/watch?v=W5p0y_MWwDE)
+- [Netsim](https://hooktube.com/watch?v=JbmUSSH6v1w)
+- [SSB DB2, JITDB, BIPF](https://hooktube.com/watch?v=efzJheWQey8)
+- [Butts in the browser FOSDEM talk](https://hooktube.com/watch?v=1iL43jj6IM0)
