@@ -20,6 +20,10 @@ Other usages of meta feeds:
 - [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec)
 - [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec)
 
+## External audits and research
+
+- [Eileen dev UX research](./SSB_research_readout.pdf)
+
 ## Videos
 
 - [Rooms 2.0](https://hooktube.com/watch?v=W5p0y_MWwDE)
