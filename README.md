@@ -22,7 +22,7 @@ Other usages of meta feeds:
 
 ## External audits and research
 
-- [Eileen dev UX research](/SSB_Research_Readout.pdf)
+- [Eileen dev UX research](https://github.com/ssb-ngi-pointer/ssb-ngi-pointer.github.io/blob/master/SSB_Research_Readout.pdf)
 
 ## Videos
 
