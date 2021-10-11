@@ -23,6 +23,7 @@ Other usages of meta feeds:
 ## External audits and research
 
 - [Eileen dev UX research](https://github.com/ssb-ngi-pointer/ssb-ngi-pointer.github.io/blob/master/SSB_Research_Readout.pdf)
+- [Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity](https://ssb-ngi-pointer.github.io/Audit%20Report_%20Secure%20Scuttlebutt%20Partial%20Replication%20and%20Fusion%20Identity.html)
 
 ## Videos
 
