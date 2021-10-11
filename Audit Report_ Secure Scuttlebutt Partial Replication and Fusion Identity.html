@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.figma{display:table;position:relative;width:100%;padding-bottom:56.25%}.figma iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid #eee}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-inner comment-enabled" data-hard-breaks="true"><h1 id="Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity" data-id="Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity"><a class="anchor hidden-xs" href="#Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity" title="Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity"><span class="octicon octicon-link"></span></a><span>Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity</span></h1><p><span>Authors: Justin Regele (Arxum Path Security GmbH), Jan Winkelmann</span></p><h2 id="Introduction" data-id="Introduction"><a class="anchor hidden-xs" href="#Introduction" title="Introduction"><span class="octicon octicon-link"></span></a><span>Introduction</span></h2><p><span>This reports documents the findings from the audit of the Secure Scuttlebutt Partial Replication and Fusion Identity specifications. While we did not find any immediate security concerns, we do provide suggestions below on areas that could be improved. Our research also included a formal analysis, i.e. a mathematical modeling, of the Fusion Identity protocol, where we found that the security properties of the protocol hold under the assumptions of our model. We do note that our model is our interpretation of the protocol, and therefore the security of a particular implementation of the protocol will be conditional to its adherence to our model.</span></p><p><span>The report begins with a summary, describing the protocols, our methodology, and a high level overview of our suggestions. This is followed by a short section on partial replication in which we discuss the work performed during this phase of the audit. The remainder of the report documents in depth our formal analysis of the Fusion Identity protocol. We discuss at a high level how we modelled the protocol using the Tamarin Prover, and then document our Rules and Lemmas individually so that the reader can understand our intentions behind the code associated with this report.</span></p><p><span>This section is then followed by the Issues and Suggestions, and we conclude with our thoughts on further work.</span></p><h2 id="Summary--Gist" data-id="Summary--Gist"><a class="anchor hidden-xs" href="#Summary--Gist" title="Summary--Gist"><span class="octicon octicon-link"></span></a><span>Summary / Gist</span></h2><p><span>We report on our analysis of two new subcomponents in the Secure Scuttlebutt ecosystem: The Fusion ID mechanism and the partial replication protocol. The specification documents in scope are:</span></p><ul>
+<li><a href="https://github.com/ssb-ngi-pointer/ssb-meta-feeds-spec" target="_blank" rel="noopener"><span>Meta Feeds Specification</span></a></li>
+<li><a href="https://github.com/ssb-ngi-pointer/fusion-identity-spec" target="_blank" rel="noopener"><span>Fusion Identity Specification</span></a></li>
+</ul><p><span>Meta Feeds are a core piece of the partial replication protocol designed by the SSB NGI Pointer team. It describes a standard way to build hierarchical feeds, where there is a single root feed and multiple subfeeds. These subfeeds can be used for different purposes, including maintaining indexes of messages. For example, One feed could be the main feed where messages are posted as they are in the current version of Scuttlebutt, and additionally there could be a feed that posts references to all messages that are of type “post”. This would be done with the goal of quickly finding all post messages by that user.</span></p><p><span>The Fusion ID protocol is a way to join multiple feeds into a single logical identity. The main motivation here is that in Scuttlebutt, users have multiple devices, but each device must have its own Scuttlebutt feed due to synchronization issues. Fusion IDs are an attempt to mitigate the impact on the user experience this technical limitation has.</span></p><p><span>The partial replication protocol was assessed through the means of a manual review of the specification, as well as clarifying conversations with the authors of the specification.</span></p><p><span>The Fusion ID protocol was reviewed more rigorously, using formal methods, i.e. a sound mathematical model. Specifically, we use the Tamarin prover to model the protocol and the security properties we expect to hold.</span></p><p><span>Additionally, an early review of parts of the </span><a href="https://github.com/ssb-ngi-pointer/rooms2" target="_blank" rel="noopener"><span>Rooms 2 Specification</span></a><span> was performed in pull requests </span><a href="https://github.com/ssb-ngi-pointer/rooms2/pull/17" target="_blank" rel="noopener"><span>#17</span></a><span> and </span><a href="https://github.com/ssb-ngi-pointer/rooms2/pull/18" target="_blank" rel="noopener"><span>#18</span></a><span>. Some changes were recommended and quickly applied to the specification. In particular, signed strings should include a reference to the rooms protocol in order to avoid the possiblity of interactions with other protocols. More importantly, however, is that the authenticating signatures should contain the nonces of both parties, in order to guarantee liveness of both parties. Since the nature of this work was an early design consultation, we do not mark the recommended changes as issues in this report.</span></p><p><span>We did not find immediate security issues in the security components in scope. However, we noticed that in several parts, the specification was not very precise and left room for interpretation. In the context of our work we were able to get clarifications of what the intended protocol mechanisms were, and used these in our modeling. Other parties will however implement their own, possibly different, interpretation of the specification, which may lead to incompatibility or invalidation of our security analysis (see </span><a href="#Issue-A-Specification-Is-Not-Precise-Enough"><span>Issue A</span></a><span>).</span></p><p><span>Additionally, we suggest further development of the protocol by adding a protocol extension for improving the trust placed in redirects (see </span><a href="#Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects"><span>Suggestion A</span></a><span>). Furthermore, we advocate making recommendations for secure storage of the keys used in the protocol, and clearly specifying which values should be considered secret (see </span><a href="#Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys"><span>Suggestion B</span></a><span>).</span></p><p><span>The formal analysis however showed that, based on the assumptions made in the model, the protocol is secure according to the security properties we defined. The two central security properties are </span><em><span>fusion secret secrecy</span></em><span> and </span><em><span>membership soundness</span></em><span>, which, besides some additional ones, are described in the </span><a href="#Lemmas"><span>Lemmas</span></a><span> section.</span></p><p><span>With regard to the general approach to security, however, we do have to note two shortcomings. Firstly, only the transport encryption protocol provides forward secrecy (see </span><a href="#Issue-B-No-Forward-Secrecy"><span>Issue B</span></a><span>). This is a security property that should be provided by a modern communication protocol. Secondly, the storage of private keys lacks a description of security best practices (see </span><a href="#Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys"><span>Suggestion B</span></a><span>).</span></p><h2 id="Partial-Replication" data-id="Partial-Replication"><a class="anchor hidden-xs" href="#Partial-Replication" title="Partial-Replication"><span class="octicon octicon-link"></span></a><span>Partial Replication</span></h2><p><span>The partial replication specification was reviewed manually and questions were discussed with the authors. The feed format for Meta feeds was discussed and the Bendy Butt format was agreed upon as the best suited for the protocol.</span></p><p><span>When discussing the derivation of signing keys of the different feeds, it was recommended that a salt should be used to derive the signing keys, e.g. using HMAC. This would allow a deterministic derivation of all signing keys from a single secret seed. It was recommended that 32 bytes was sufficient input for the seed. Additionally, 32 bytes was agreed upon for the size of the nonce, and that random data could be used for the nonce instead of a timestamp, since collisions on random 256-bit values are negligibly rare.</span></p><p><span>In the design of subprotocols that make use of signing, it is important to keep the domains of SSB messages signing and the different subprotocols separated. We found that the team has done a good job doing this.</span></p><p><span>The trust model for auditing claims was discussed. One potential concern for the system was regarding incentives for members of the network to perform audits of claims. In situations where all of the users are using thing clients, auditing claims would not be feasible, as auditing requires resources not available on mobile devices. This could result in centralization as specific nodes would handle all the auditing, and therefore trust would be centralized to these nodes. This is more of a concern regarding decentralization than the security of the protocol. However, if decentralization itself is considered a security property for the network, then the centralizating of auditing nodes could pose a security concern. If partial replication is dependent on a small number of nodes, the trustworthiness of these nodes (i.e. have they been compromised) would affect the trustworthiness of the partial replication protocol. Despite the emphasis on decentralization, the existence of pubs demonstrates that some centralization is useful for the ecosystem’s usability. It was concluded that as long as auditing nodes were not reduced to a single point of failure, nodes coming to consensus on auditing claims would work securely much as they do in a setting involving a blockchain.</span></p><h2 id="Fusion-Identity-Protocol" data-id="Fusion-Identity-Protocol"><a class="anchor hidden-xs" href="#Fusion-Identity-Protocol" title="Fusion-Identity-Protocol"><span class="octicon octicon-link"></span></a><span>Fusion Identity Protocol</span></h2><p><span>In this section we take a closer look at the Fusion ID protocol. First we describe the features and the protocol flow. In subsection </span><a href="#Audit"><span>Audit</span></a><span> we present the results of our manual review. In Formal Analysis we first provide an introduction to the tool we used, then explain how we modelled the protocol and security properties, go into limitations of the system and finally present the results.</span></p><h3 id="Description" data-id="Description"><a class="anchor hidden-xs" href="#Description" title="Description"><span class="octicon octicon-link"></span></a><span>Description</span></h3><p><span>The protocol flow is described in the following sequence diagram:</span></p><p><img src="https://kroki.io/seqdiag/svg/eNrNlD1v2zAQhnf_iqsWWYAV75GVduiSoVORqTYCfZxtxjKpknSMoPB_71EkJTlWILVdOpK8e_m8d-Qp_FmybAe_ZgAnhRLi-AGqrNaihh9VlmMFKQRPj_dQSMw0wvakmODAymDTJIGPjh-6RC4okvJ2yFFS1v2ab0_fsaA9mfFyHiWwZSWt6sO8OYjWvD7lFVN7Cp2H9pKYlUvGmQ4XJnoBtaijYEN3XjzsKo5vYS1o2ZFCSOkhZY56ZPyVEXm9FxxBC3NtsLlxaY9bkx-BG6kW3aREXguchOFogCxF2jBILJC9Er-DsRiwleLoIJoadCqmCDcqWVFgrV3kpe9gtYqnObAS1sGUuptrrfA-Uw4AyztAruVJ6c_BJqH80R64cDjg29ATG0aHr9--NCfkAfomnJrvg31sre4HjfAobSs80-QmtPVweLUUYgv09KEQx7pCjX_dmmWj5Q0ptqOTqy371qLZaMt6HXsRjPe_zCfzWyg1TVObXgmFygXT5mz8L2lxzJU28RNGxqDfpTPcKrVvMRl2lkwdYhzP_-sgSyaUVmLJ6G1qEFVp5sMf2xmqshclSJJ9bkBJ-Ln7_ckg7RiseuMFnJnek5o-C3m4BYSsYgV2eRCYJPdD_N-IfZQ3YZd2ziialqD3CE-Pd9cd8PYyrVENmVtA6CZddH0jceUiv6VK3mE1QR7KLCS-UB3_DclqhFPnrq1Ff-4ma25YzJbVolFMYpffv6eCpw==" alt="" loading="lazy"></p><p><span>The source code for this diagram can be found in </span><a href="#Appendix-A-Source-Code-of-Sequence-Diagram"><span>Appendix A</span></a><span>.</span></p><h3 id="Formal-Analysis" data-id="Formal-Analysis"><a class="anchor hidden-xs" href="#Formal-Analysis" title="Formal-Analysis"><span class="octicon octicon-link"></span></a><span>Formal Analysis</span></h3><p><span>There are several methodologies for rigorously analyzing the security of a protocol. When it comes to cryptographic protocols, the computational model is usually considered the strongest. However, performing analyses in this model is very complex, and focuses more on the security of the cryptographic components, rather than logic errors.</span></p><p><span>Formal methods are an approach that have its origins in type theory and have been used for verifying program correctness for a long time. Since then, theories for many cryptographic algorithms have been introduced, allowing to model cryptographic protocols as well.</span></p><p><span>In this work we use the Tamarin prover. It provides theories for many common cryptographic primitives and reasons about network flow and attacker knowledge. The source code of the model we developed can be found in </span><a href="#Appendix-B-Tamarin-Source-Code"><span>Appendix B</span></a><span>.</span></p><p><span>In our analysis, we showed that all security properties we formulated hold for the modelled protocol.</span></p><p><span>The rest of this section is structured as follows: First we give a brief introduction to the way protocols and security properties are modelled in Tamarin. Then we provide an overview over the way the Fusion ID protocol is modelled, and then into how the security properties we aim for are modelled. We conclude with a brief section that discuss the limitations of this approach.</span></p><h4 id="Modelling-in-Tamarin" data-id="Modelling-in-Tamarin"><a class="anchor hidden-xs" href="#Modelling-in-Tamarin" title="Modelling-in-Tamarin"><span class="octicon octicon-link"></span></a><span>Modelling in Tamarin</span></h4><p><span>The fundamental concept is as follows: The modeller describes rules that modify the current state of the “modelled world”. That world is modelled as a collection of so called </span><em><span>facts</span></em><span>, which are atomic state objects such as </span><code>UserIsInvited(uid, fid)</code><span> to denote that the user with id </span><code>uid</code><span> is invited to fusion id </span><code>fid</code><span>.</span></p><p><span>A rule can change that world by consuming old and producing new facts. For example, there could be a rule where the </span><code>UserIsInvited</code><span> fact is consumed and replaced with a </span><code>UserHasAccepted</code><span> fact.</span></p><p><span>Tamarin provides some special facts that help with modelling cryptographic protocols. Firstly, there is the </span><code>Fr</code><span> (for </span><em><span>fresh</span></em><span>) fact, which is used to create new random values. Secondly, there are the </span><code>In</code><span> and </span><code>Out</code><span> facts, which are used to model both network interaction and attacker knowledge; a rule can consume a fact </span><code>In(msg)</code><span>, which represents receiving a message, and produce an </span><code>Out(msg)</code><span> fact, which represents sending one. The network model of Tamarin is simple: It assumes that all that is sent to the network is received by the adversary, which is then able to provide it as input to any rule consuming an </span><code>In</code><span> fact (assuming the rule is fulfilled).</span></p><p><span>Rules usually consume and produce more than one fact, and the data that is contained in these facts is usually related. For example, a rule can consume a signed message, and the key used for signing must match a that of a registered user. This means, that rules are used to model the correct flow of the protocol, but as soon as the attacker learns a secret, they can also use it for signing, encrypting or decrypting, and then use values they learned from this as well.</span></p><p><span>Each sequence of application of rules will lead to a different collection of facts. In Tamarin, security properties are defined by declaring that in all valid applications of rules, a certain invariant holds. In order to formulate these statements, we need another class of facts. To not confuse our terminology too much, lets call the facts from earlies  </span><em><span>state facts</span></em><span> (because they describe the state of the model). This new class of facts is called </span><em><span>action facts</span></em><span>. Rules can also specify to produce those, but these can not be consumed later on. Instead, they are written to a trace, which describes the sequence of all rules that have been applied.</span></p><p><span>The security properties are then formulated as </span><em><span>lemmas</span></em><span>, which are logic statements over predicates, quantified over all possible traces - either formulated as “for all” or “there does not exist”. There is another feature that uses this kind of statement: restrictions. These can be used to limit the traces that are being analyzed. In our model one example we use these for is to prevent parties from inviting themselves.</span></p><p><span>As a side note: there also are lemmas of the form “there exists a trace”. This is used for sanity-checking the model, i.e. to ensure that there even exists a way for the protocol to terminate as intended.</span></p><h4 id="Rules" data-id="Rules"><a class="anchor hidden-xs" href="#Rules" title="Rules"><span class="octicon octicon-link"></span></a><span>Rules</span></h4><p><span>Here we document the rules in our Model. We begin with the first rules in more detail, explaining the syntax of each rule, along with its intention. Later we move onto only explaining the rule’s intention, as the reader comes to understand Tamarin’s syntax.</span></p><h5 id="Register-Device" data-id="Register-Device"><a class="anchor hidden-xs" href="#Register-Device" title="Register-Device"><span class="octicon octicon-link"></span></a><span>Register Device</span></h5><p><span>The </span><code>AARegisterDevice</code><span> Rule is named because Tamarin uses alphabetic sorting to choose cases to search. We found that by naming this rule with a prepended AA, this solved problems of Tamarin becoming lost and getting caught in endless loops during automated proving. The defined rule is as follows:</span></p><pre><code>rule AARegister_Device:
+let
+devVK = pk(~devSK)
+in
+[ Fr(~devSK) ]
+--[ NewDevice(devVK, ~devSK) ]-&gt;
+[
+  !Device(devVK),
+  Out(devVK)
+]
+</code></pre><p><span>The rule defines a device, which uses pattern matching to pair the device’s signing key </span><code>devSK</code><span> with the device’s verification key </span><code>devVK</code><span>. </span><code>Fr(~devSK)</code><span> instructs Tamarin to generate a fresh signing key for this device as an input fact. The action fact </span><code>NewDevice(devVK, ~devSK)</code><span> registers this new Device. </span><code>!Device(devVK)</code><span> in the output facts means the device is now available in the system and is persistent and will not disappear when consumed by other rules (indicated by the </span><code>!</code><span>). </span><code>Out(devVK)</code><span> means that the device’s verification key is now publicly available.</span></p><h5 id="Lose-Device" data-id="Lose-Device"><a class="anchor hidden-xs" href="#Lose-Device" title="Lose-Device"><span class="octicon octicon-link"></span></a><span>Lose Device</span></h5><pre><code>rule Lose_Device:
+let
+devVK = pk(devSK)
+in
+[ !Device(devVK) ]
+--[ LoseDevice(devVK) ]-&gt;
+[ !DeviceLost(devVK)
+, Out(devSK) ]
+</code></pre><p><span>The Lose_Device rule takes in a Device, and outputs a DeviceLost fact for that device VK, along with the SK for the device. The Action fact for this rule is simply </span><code>LoseDevice</code><span>.</span></p><h5 id="Initialize-FusionID" data-id="Initialize-FusionID"><a class="anchor hidden-xs" href="#Initialize-FusionID" title="Initialize-FusionID"><span class="octicon octicon-link"></span></a><span>Initialize FusionID</span></h5><p><span>This rule models the initialization of a Fusion Identity. Its inputs are:</span></p><ul>
+<li><span>a fid, which is the public key for a freshly generated fusion secret</span></li>
+<li><span>a device along with its keypair</span></li>
+<li><span>a signed init message containing the device’s verification key and the fid, signed with the device’s signing key</span></li>
+</ul><p><span>In the action traces, the rule models the following states changes:</span></p><ul>
+<li><span>the fusion ID is initialized</span></li>
+<li><span>the device creating the fusion id is added to the fusion id</span></li>
+<li><span>the device creating the fusion id learns about the fusion id</span></li>
+<li><span>the device creating the fusion id learns the fusion secret</span></li>
+</ul><p><span>The rules output states appear similar to the state changes in the action traces. </span><code>State_IsInFusionID</code><span> and </span><code>State_KnowsFusionID</code><span> appear similar to </span><code>StateChange_AddToFusionID</code><span> and </span><code>StateChange_LearnAboutFusionID</code><span>. However, the distinction is important for Tamarin as they are different types of facts. Within the trace are action facts, which indicate a change, whereas the facts in the output indicate the result.</span></p><h5 id="Receive-Init-Message" data-id="Receive-Init-Message"><a class="anchor hidden-xs" href="#Receive-Init-Message" title="Receive-Init-Message"><span class="octicon octicon-link"></span></a><span>Receive Init Message</span></h5><p><code>ReceiveInitMsg</code><span> takes an </span><code>initor</code><span> (initiator) and a </span><code>rcpt</code><span> (recipient), and models another device on the network observing that a the fusion id has been intialized. </span><code>State_Change_AddToFusionID(rcptVK, fid, initorVK)</code><span> means that </span><code>rcptVK</code><span> now knows that the </span><code>initorVK</code><span> is in fusion id </span><code>fid</code><span>.</span></p><h5 id="Send-Invitation" data-id="Send-Invitation"><a class="anchor hidden-xs" href="#Send-Invitation" title="Send-Invitation"><span class="octicon octicon-link"></span></a><span>Send Invitation</span></h5><p><span>SendInvite models the sending of an invite to join the fusion identity. The input requirements are that the invitor knows the fusion identity and is a part of it. The invitee is an arbitrary input. The state changes are that the invite has been sent and that the invitor knows that the invitee has been invited.</span></p><h5 id="Receive-Invitation" data-id="Receive-Invitation"><a class="anchor hidden-xs" href="#Receive-Invitation" title="Receive-Invitation"><span class="octicon octicon-link"></span></a><span>Receive Invitation</span></h5><p><span>Models the reception of an invite. The rule requires a fid, invitor, invitee and recipient. The NotEqual restriction is used to ensure that the invitee is not the same as the invitor. The output of this is that the recipient is aware that the invitee has been invited by the invitor. The recipient and the invitee can be separate entities as everyone on the network will see the invitation.</span></p><h5 id="Accept-Invitation" data-id="Accept-Invitation"><a class="anchor hidden-xs" href="#Accept-Invitation" title="Accept-Invitation"><span class="octicon octicon-link"></span></a><span>Accept Invitation</span></h5><p><span>This rule specifies that if the invitee was the same as the recipient in ReceiveInvite, then the invite is accepted. The invitee sets their state to being invited and more importantly Consents to the FusionID. This rule outputs an accept message.</span></p><h5 id="Receive-Accept" data-id="Receive-Accept"><a class="anchor hidden-xs" href="#Receive-Accept" title="Receive-Accept"><span class="octicon octicon-link"></span></a><span>Receive Accept</span></h5><p><span>This rule is similar to ReceiveInvitation, in that it models how all device’s on the network will observe the message. We have commented out the verification of the accept messages signature to improve the working of Tamarin. This could be a potential area for future research. The output of this rule is that the recipient knows that the invitee has accepted the invite by the invitor.</span></p><h5 id="Send-Entrust" data-id="Send-Entrust"><a class="anchor hidden-xs" href="#Send-Entrust" title="Send-Entrust"><span class="octicon octicon-link"></span></a><span>Send Entrust</span></h5><p><span>When an invitor knows that an invitee has consented to their invitation, is in the fusion ID and knows the fusion secret, the fusion secret is encrypted and sent to the invitee. A State Change is also put on the trace, marking that the invitor knows that the invitee has been entrusted.</span></p><h5 id="Send-Proof-of-Key" data-id="Send-Proof-of-Key"><a class="anchor hidden-xs" href="#Send-Proof-of-Key" title="Send-Proof-of-Key"><span class="octicon octicon-link"></span></a><span>Send Proof of Key</span></h5><p><span>This rule processes the encrypted entrust message. It also defines a Proof of Key message, containing an inner and outer signed message. The inner message is signed with the fusion secret to prove knowledge of the key. The signed inner message is then included in the outer message, with is signed with the invitee’s signing key. The state changes in this rule occur for the invitee’s state, where the invitee adds itself to the fusion identity and learns the fusion secret.</span></p><h5 id="Receive-Proof-of-Key" data-id="Receive-Proof-of-Key"><a class="anchor hidden-xs" href="#Receive-Proof-of-Key" title="Receive-Proof-of-Key"><span class="octicon octicon-link"></span></a><span>Receive Proof of Key</span></h5><p><span>The proof of key message is taken as input. Because we use pattern matching and recreate the same Proof of Key message in the prelude to ReceiveProofOfKey as was done in SendProofOfKey, the message is guaranteed to be signed correctly. The recipient stores receipt of the proof of key in their internal state. This is the final step in all recipients knowing that the invitee is now in the fusion identity.</span></p><h5 id="Send-Tombstone" data-id="Send-Tombstone"><a class="anchor hidden-xs" href="#Send-Tombstone" title="Send-Tombstone"><span class="octicon octicon-link"></span></a><span>Send Tombstone</span></h5><p><span>SendTombstone is a simple rule that outputs a signed tombstone message, and sets the internal state of the device sending the tombstone message (the tomber) that the fusion identity has been tombstoned.</span></p><h5 id="Receive-Tombstone" data-id="Receive-Tombstone"><a class="anchor hidden-xs" href="#Receive-Tombstone" title="Receive-Tombstone"><span class="octicon octicon-link"></span></a><span>Receive Tombstone</span></h5><p><span>The recipient will set the fusion identity to be tombstoned if the sender of the message is in the fusion identity.</span></p><h5 id="Send-Redirect" data-id="Send-Redirect"><a class="anchor hidden-xs" href="#Send-Redirect" title="Send-Redirect"><span class="octicon octicon-link"></span></a><span>Send Redirect</span></h5><p><span>A signed redirect message is output if the sender is in both the old and new fusion identities and the old fusion identity is tombstoned.</span></p><h5 id="Receive-Redirect" data-id="Receive-Redirect"><a class="anchor hidden-xs" href="#Receive-Redirect" title="Receive-Redirect"><span class="octicon octicon-link"></span></a><span>Receive Redirect</span></h5><p><span>A redirect message with a valid signature is received if the sender is in both the old and new fusion identities.</span></p><h5 id="Attest-Redirect" data-id="Attest-Redirect"><a class="anchor hidden-xs" href="#Attest-Redirect" title="Attest-Redirect"><span class="octicon octicon-link"></span></a><span>Attest Redirect</span></h5><p><span>An attestation of either “accept” or “reject” is modelled. We decided to not model the </span><code>null</code><span> case as it was ambiguous. A signed attestation message is output,  along with a state change for the attestor of either “accept” or “reject”.</span></p><h4 id="Restrictions" data-id="Restrictions"><a class="anchor hidden-xs" href="#Restrictions" title="Restrictions"><span class="octicon octicon-link"></span></a><span>Restrictions</span></h4><h5 id="dont_invite_members" data-id="dont_invite_members"><a class="anchor hidden-xs" href="#dont_invite_members" title="dont_invite_members"><span class="octicon octicon-link"></span></a><span>dont_invite_members</span></h5><p><span>This restriction prevents tamarin from sending an invite to an invitee if that invitee has already been added to the fusion identity in the invitor’s state.</span></p><h5 id="enforce_not_equal" data-id="enforce_not_equal"><a class="anchor hidden-xs" href="#enforce_not_equal" title="enforce_not_equal"><span class="octicon octicon-link"></span></a><span>enforce_not_equal</span></h5><p><span>This restriction prevents two entities from being equal. It is used to ensure that the invitee is not the invitor in ReceiveInvite.</span></p><h5 id="receive_init_only_once" data-id="receive_init_only_once"><a class="anchor hidden-xs" href="#receive_init_only_once" title="receive_init_only_once"><span class="octicon octicon-link"></span></a><span>receive_init_only_once</span></h5><p><span>This restriction prevents receiving an init message multiple times. This was necesary to prevent Tamarin from getting caught in endless loops</span></p><h4 id="Lemmas" data-id="Lemmas"><a class="anchor hidden-xs" href="#Lemmas" title="Lemmas"><span class="octicon octicon-link"></span></a><span>Lemmas</span></h4><h5 id="Fusion-Secret-Secrecy" data-id="Fusion-Secret-Secrecy"><a class="anchor hidden-xs" href="#Fusion-Secret-Secrecy" title="Fusion-Secret-Secrecy"><span class="octicon octicon-link"></span></a><span>Fusion Secret Secrecy</span></h5><p><span>Another central security propery of the protocol is that the fusion secret remains secret, as long as none of the members of the fusion id remain honest, i.e. don’t go rogue, lose their device or otherwise leak the key to the adversary.</span></p><p><span>Roughly, we say that under no circumstances there is a Fusion ID and member thereof, where the adversary knows the key without any member of the Fusion ID losing their device. In Tamarin syntax and using our action facts, this is encoded as follows:</span></p><pre><code>
+lemma fusion_secret_secrecy:
+// there does not exist
+"not (Ex initor fid fusionSecret #init #learn.
+    // a fusion id `fid` and matching secret `fusionSecret`
+    InitFusionID(fid, initor, fusionSecret) @ #init        &amp;
+    // where the adversary knows the secret
+    K(fusionSecret) @ #learn                               &amp;
+    // and neither the initiator
+    not (Ex #lose. LoseDevice(initor) @ #lose) &amp;
+    // nor a party the key was legally entrusted to lost their keys
+    not (Ex anyEntruster anyEntrustee #entrust #lose.
+        EntrustSent(fid, anyEntruster, anyEntrustee) @ #entrust &amp;
+        LoseDevice(anyEntrustee) @ #lose
+    )
+)"
+</code></pre><h5 id="Membership-Soundness" data-id="Membership-Soundness"><a class="anchor hidden-xs" href="#Membership-Soundness" title="Membership-Soundness"><span class="octicon octicon-link"></span></a><span>Membership Soundness</span></h5><p><span>A core security property is that nodes don’t get confused about which parties are in the Fusion ID. Only those invited by someone who already is a member should be considered candidates. This lemma proves that for all members that have been added by invitation, there exists someone who was a member before who invited them, or the one they thought they received the invitation from lost their device before. Note that there is one more case: After attaining the fusion secret, the attacker could create another sockpuppet and perform valid invitations from that peer. This rather complex security statement is modelled as follows:</span></p><pre><code>lemma membership_soundness:
+"All Invee Invr fid #added.
+    (
+        StateChange_AddToFusionID(Invee, fid, Invee) @ #added &amp;
+        AddedByInvitation(Invr)                      @ #added
+    ) ==&gt; (
+        // case 1: proper invitation flow
+        (Ex #invrAdded #invite.
+            StateChange_AddToFusionID(Invr, fid, Invr) @ #invrAdded &amp;
+            InviteSent(fid, Invr, Invee) @ #invite &amp;
+            #invite &lt; #added
+        ) |
+        // case 2: the attacker takes over a member
+        (Ex fusionSecret #lose  #learn.
+            LoseDevice(Invr) @ #lose &amp;
+            StateChange_LearnFusionSecret(Invr, fid, fusionSecret) @ #learn &amp;
+            #learn &lt; #added
+        ) |
+        // case 3: the attacker stole a device that was entrusted the secret and steals some other device to send the entrust from
+        (Ex anyone secretHolder #invrLose #fusionSecretLose #entrust.
+            LoseDevice(Invr) @ #invrLose &amp;
+            EntrustSent(fid, anyone, secretHolder) @ #entrust &amp;
+            LoseDevice(secretHolder) @ #fusionSecretLose &amp;
+            #invrLose &lt; #added &amp;
+            #fusionSecretLose &lt; #added
+        )
+    )"
+</code></pre><p><span>Note the subtle difference between </span><code>EntrustSent</code><span> (in case 3) and </span><code>StateChange_LearnFusionSecret</code><span> (in case 2): One fact is emitted when the encrypted entrust message is </span><em><span>sent</span></em><span>, and one when it is </span><em><span>received</span></em><span>.</span></p><h5 id="Tombstoning-Authorization" data-id="Tombstoning-Authorization"><a class="anchor hidden-xs" href="#Tombstoning-Authorization" title="Tombstoning-Authorization"><span class="octicon octicon-link"></span></a><span>Tombstoning Authorization</span></h5><p><span>To ensure that only members of a fusion identity can tombstone the identity, we say that a fusion identity can only be tombstoned if the recipient knows the sender of the tombstone message is in the fusion identity before the tombstone message is receeived, with the exception that the sender could have also lost their device.</span></p><pre><code>lemma tombstone_authorization:
+"All fid rcvr sender #received  #joined.
+  (
+    (
+        StateChange_AddToFusionID(rcvr, fid, sender)          @ #joined     &amp;  // rcvr knows sender is in FID
+        StateChange_FID_Tombstoned(rcvr, fid, sender)         @ #received   &amp;  // msg received
+        not (sender = rcvr)
+    ) ==&gt; (
+        (
+            Ex #tombstoned.
+            StateChange_FID_Tombstoned(sender, fid, sender)       @ #tombstoned &amp;  // sender tombstones
+            #joined &lt; #received &amp;
+            #tombstoned &lt; #received
+        ) | (
+            Ex #lose.
+            LoseDevice(sender) @ #lose &amp;
+            #lose &lt; #received
+        )
+    )
+)"
+</code></pre><h5 id="Key-Is-Entrusted-Only-to-Devices-that-Have-Consented-to-the-Fusion-Identity" data-id="Key-Is-Entrusted-Only-to-Devices-that-Have-Consented-to-the-Fusion-Identity"><a class="anchor hidden-xs" href="#Key-Is-Entrusted-Only-to-Devices-that-Have-Consented-to-the-Fusion-Identity" title="Key-Is-Entrusted-Only-to-Devices-that-Have-Consented-to-the-Fusion-Identity"><span class="octicon octicon-link"></span></a><span>Key Is Entrusted Only to Devices that Have Consented to the Fusion Identity</span></h5><p><span>We specify that for an Entruster to entrust another device that the entrusting device has not been lost and the entrusted device has previously consented to the invitation to the fusion identity.</span></p><pre><code>lemma key_is_entrusted_only_to_consenting_devices:
+// for all devices, only devices that have consented to the fusion ID are entrusted with the key
+  "All Entruster Entrustee fid #txEntrust. (
+    ( 
+        StateChange_MarkingEntrusted(Entruster, fid,  Entrustee) @ #txEntrust
+      &amp; ( not Ex #loseDevice. (
+                (LoseDevice(Entruster) @ #loseDevice &amp; #loseDevice &lt; #txEntrust)
+            //| (LoseDevice(Entrustee) @ #loseDevice &amp; #txEntrust  &lt; #loseDevice)
+            )
+        )
+    ) ==&gt; (
+        Ex #rxConsent. (
+            StateChange_ConsentedToFusionID(Entruster, fid, Entrustee) @ #rxConsent
+          &amp; #rxConsent &lt; #txEntrust
+        ) 
+    )
+)"
+</code></pre><h4 id="Limitations" data-id="Limitations"><a class="anchor hidden-xs" href="#Limitations" title="Limitations"><span class="octicon octicon-link"></span></a><span>Limitations</span></h4><p><span>Because the redirect and attestation system involves out of band communications and voting methods that cannot be modelled in Tamarin, we were not able to model or provide security proofs on this portion of the protocol.</span></p><h3 id="Observations" data-id="Observations"><a class="anchor hidden-xs" href="#Observations" title="Observations"><span class="octicon octicon-link"></span></a><span>Observations</span></h3><p><span>The specification was not precise with regards to message format and state transitions. This means that our efforts at modelling the protocol represent our interpretation of the specification and that implementors might have a different interpretation, in which their implementation might diverge from our model (see </span><a href="#Issue-B-No-Forward-Secrecy"><span>Issue B</span></a><span>).</span></p><p><span>Additionally, in some instances the modelled protocol slightly deviates from the specified protocol. The main reason for that is that in Tamarin, modelling the referencing of messages by hash is not trivial, which means we didn’t include tangles or other kinds of references in the model. However, if the real protocol messages contain at least all the information as the modelled protocol messages, the security of the real protocol is implied.</span></p><h2 id="Implementation-Considerations" data-id="Implementation-Considerations"><a class="anchor hidden-xs" href="#Implementation-Considerations" title="Implementation-Considerations"><span class="octicon octicon-link"></span></a><span>Implementation Considerations</span></h2><h3 id="Observations1" data-id="Observations"><a class="anchor hidden-xs" href="#Observations1" title="Observations1"><span class="octicon octicon-link"></span></a><span>Observations</span></h3><p><span>When implementing the protocol, state transitions have to be done according to the protocol spec, or rather the modelled protocol, since the spec is not very precise. Because of the imprecision, we had to interpret a bit during the formal analysis and accordingly the results of the formal analysis do not necessarily translate to other implementations. Since the Scuttlebutt community is diverse, implementations should follow our interpretation to guarantee the security provided in our proofs.</span></p><h2 id="Future-Work" data-id="Future-Work"><a class="anchor hidden-xs" href="#Future-Work" title="Future-Work"><span class="octicon octicon-link"></span></a><span>Future Work</span></h2><p><span>Our proposed protocol extension in </span><a href="#Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects"><span>Suggestion A</span></a><span> has not been modelled. Future work could model the extension and guide the design of the protocol extension.</span></p><p><span>While the Tamarin code was written with best practices in mind, we believe there are still areas that could benefit from refactoring and further scrutiny.</span></p><h2 id="Issues" data-id="Issues"><a class="anchor hidden-xs" href="#Issues" title="Issues"><span class="octicon octicon-link"></span></a><span>Issues</span></h2><h3 id="Issue-A-Specification-Is-Not-Precise-Enough" data-id="Issue-A-Specification-Is-Not-Precise-Enough"><a class="anchor hidden-xs" href="#Issue-A-Specification-Is-Not-Precise-Enough" title="Issue-A-Specification-Is-Not-Precise-Enough"><span class="octicon octicon-link"></span></a><span>Issue A: Specification Is Not Precise Enough</span></h3><p><span>We found the specification to be vague with respect to the expected state of the devices when receiving and sending messages, in particular, under which conditions are entities allowed to receive and send messages.</span></p><p><span>For example, for invite messages the protocol specification states “Only a feed that was either the one that created the fusion identity or has accepted an invite is allowed to create an invite.” While this might guide the implementors of an SSB client, it does not define rules which would restrict the behavior of an attacker. A clearer specification would outline which rules must be satisfied in order to process a received message. These rules would require reference to variables (in pseudocode) that refer to earlier steps in the protocol.</span></p><h3 id="Issue-B-No-Forward-Secrecy" data-id="Issue-B-No-Forward-Secrecy"><a class="anchor hidden-xs" href="#Issue-B-No-Forward-Secrecy" title="Issue-B-No-Forward-Secrecy"><span class="octicon octicon-link"></span></a><span>Issue B: No Forward Secrecy</span></h3><p><span>Most if not all modern secure communication protocols provide forward secrecy. This security property describes that encrypted messages sent before a device was corrupted remain secret. In the Scuttlebutt ecosystem, very few components satisfy this notion. We recommend that a forward-secret version of encrypted messages be added.</span></p><h2 id="Suggestions" data-id="Suggestions"><a class="anchor hidden-xs" href="#Suggestions" title="Suggestions"><span class="octicon octicon-link"></span></a><span>Suggestions</span></h2><h3 id="Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects" data-id="Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects"><a class="anchor hidden-xs" href="#Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects" title="Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects"><span class="octicon octicon-link"></span></a><span>Suggestion A: Explore Protocol Extension for Authentication for Redirects</span></h3><p><span>After a Fusion Identity has been tombstoned, the protocol specifies a system for publishing redirects. Because at this state of the protocol it is unknown which of the tombstoned fusion identity’s devices can be trusted, a voting system is outlined in the protocol, where users can attest to a redirect. This requires out of band communication for users to verify which redirect is the correct one. While this works for many members of the SSB community that have other means of communicating, for users that are not connected outside the network, this system has drawbacks.</span></p><p><span>We propose a protocol extension where redirects are authenticated by the individual that generated the original fusion identity. The security of a scuttlebutt identity is based on what a user has, i.e. their private key. For a fusion identity, the secret key of the fusion identity is shared by all devices. In the event that a device is lost or compromised, the security model based on what a user has becomes broken. Because of this, implementing a model based on what the user knows could supplement the redirect process because the user of a compromised device would not know the secret.</span></p><p><span>The proposed scheme would work as follows: when a user generates a fusion identity, they create a memory based secret (i.e. password), that is passed to a key derivation function and then hashed with a secure hashing algorithm. This hash is then published along with the fusion identity. When the user tombstones their fusion identity and publishes a redirect, the redirect is guaranteed to be authentic because a proof of knowledge of the hash’s preimage (produced by the key derivation function, and not the password itself) is published with the redirect. Because other users can confirm that the redirect is valid by reproducing the hash from the fusion identity initialization, they will know that the redirect was published by the user that created the original fusion identity. This system would allow redirects to be trusted without using any out of band communications or attestation systems.</span></p><h3 id="Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys" data-id="Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys"><a class="anchor hidden-xs" href="#Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys" title="Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys"><span class="octicon octicon-link"></span></a><span>Suggestion B: There are no Recommendations for how to Protect Private Keys</span></h3><p><span>The protocol operates on the assumption that private keys are maintained private. The security of private keys is then a responsibility for the implementation of the protocol in various clients. Because private keys are stored as regular files on the user’s filesystem without special permissions, it only takes a drive-by browser exploit for a private key to become compromised. We recommend that the protocol outline recommendations for those implementing clients where the key should be stored according to security best practices. For instance, using a secure storage mechanism such as a key chain, or encrypting the private key when at rest.</span></p><h1 id="Appendix" data-id="Appendix"><a class="anchor hidden-xs" href="#Appendix" title="Appendix"><span class="octicon octicon-link"></span></a><span>Appendix</span></h1><h2 id="Appendix-A-Source-Code-of-Sequence-Diagram" data-id="Appendix-A-Source-Code-of-Sequence-Diagram"><a class="anchor hidden-xs" href="#Appendix-A-Source-Code-of-Sequence-Diagram" title="Appendix-A-Source-Code-of-Sequence-Diagram"><span class="octicon octicon-link"></span></a><span>Appendix A: Source Code of Sequence Diagram</span></h2><p><span>The source code can be processed using  </span><a href="https://blockdiag.com" target="_blank" rel="noopener"><span>blockdiag</span></a><span> or </span><a href="https://kroki.io" target="_blank" rel="noopener"><span>kroki.io</span></a><span> in SeqDiag mode.</span></p><pre><code>seqdiag {
+  user --&gt; laptop [label = "UI: create fusion id"] {
+    laptop -&gt;&gt; laptop [note = "generate:\nfuSec = rand(); fid = pk(fuSec)\npublish:\n('fusion-id/init', fid, pop)"]
+  }
+  user &lt;-- laptop [label = "created fusion id 'fid'"]
+
+  user --&gt; laptop [label = "UI: invite phone to fid"]{
+    laptop -&gt;&gt; phone [note = "publish:\n('fusion-id/invite', fid, phone)"]{
+      phone --&gt; user [label="UI: received invite to fid from laptop"]
+      phone &lt;-- user [label="UI: accept"]
+    }
+    laptop &lt;&lt;- phone [note = "publish:\n('fusion-id/accept', fid)"]
+  }
+  user &lt;-- laptop [label = "UI: phone has accepted. entrust?"];
+  
+  user --&gt; laptop [label = "UI: entrust key"] {
+    laptop -&gt;&gt; phone [note = "publish DM@phone:\n ('fusion-id/entrust', fid, fuSec)"] {
+      phone --&gt; user [label = "UI: received entrust from laptop"]
+      phone &lt;-- user [label = "UI: publish proof and complete"]
+    }
+    laptop &lt;&lt;- phone [note = "publish:\n('fusion/proof', fid, sign('proof', fid, phone))"]
+  }
+  user &lt;-- laptop [label ="UI: phone joined fusion id!"]
+  
+  
+  === user loses phone ===
+  
+  
+  user --&gt; laptop [label = "UI: tombstone fusion id"] {
+    laptop -&gt;&gt; laptop[note = "publish:\n('/fusion/tombstone', fid)"];
+  }
+  user &lt;-- laptop;
+  user --&gt; laptop [label = "UI: create new fusion id"] {
+    laptop -&gt;&gt; laptop [note = "generate:\nfuSec = rand(); fid = pk(fuSec)\npublish:\n('fusion-id/init', fid, pop)"]
+  }
+  user &lt;-- laptop;
+
+
+  user --&gt; laptop [label = "UI: redirect old to new fusion id"] {
+    laptop -&gt;&gt; laptop [note = "publish:\n('/fusion/redirect', old_fid, new_fid)"]
+  };
+  user &lt;-- laptop;
+
+  user --&gt; laptop [label = "UI: sync with network"] {
+    laptop -&gt; alice [label =  "sync"]
+    laptop &lt;- alice [note = "alice accepts in the UI.\npublish:\n('/fusion/attest', old_fid, new_fid, 'accept')"]
+    laptop -&gt; bob [label =  "sync"];
+    laptop &lt;- bob [note = "bob rejects in the UI.\npublish:\n('/fusion/attest', old_fid, new_fid, 'reject')"]
+  }
+  user &lt;-- laptop [label = "UI: alice has accepted;\nbob has rejected."]
+}
+</code></pre><h2 id="Appendix-B-Tamarin-Source-Code" data-id="Appendix-B-Tamarin-Source-Code"><a class="anchor hidden-xs" href="#Appendix-B-Tamarin-Source-Code" title="Appendix-B-Tamarin-Source-Code"><span class="octicon octicon-link"></span></a><span>Appendix B: Tamarin Source Code</span></h2><pre><code>theory ScuttlebuttFusionIdentities
+begin
+
+builtins: hashing, signing, asymmetric-encryption
+
+// register new devices in the model
+// there is an AA at the front so it's first when sorted by byte value. this is important so it picks this one first.
+rule AARegister_Device:
+  let
+    devVK = pk(~devSK)
+  in
+    [ Fr(~devSK) ]
+  --[ NewDevice(devVK, ~devSK) ]-&gt;
+    [
+        !Device(devVK),
+        Out(devVK)
+    ]
+
+rule Lose_Device:
+    let
+      devVK = pk(devSK)
+    in
+    [ !Device(devVK) ]
+  --[ LoseDevice(devVK) ]-&gt;
+    [ !DeviceLost(devVK)
+    , Out(devSK) ]
+
+rule Initialize_FusionID:
+    let
+        fid           = pk(~fusionSecret)
+        devVK         = pk(devSK)
+        msg           = &lt;'init', devVK, fid&gt;
+        signedInitMsg = &lt;msg, sign(msg, devSK)&gt;
+    in
+    [ !Device(devVK)
+    , Fr(~fusionSecret) ]
+  --[
+    InitFusionID(fid, devVK, ~fusionSecret),
+    StateChange_AddToFusionID(devVK, fid, devVK),
+    StateChange_LearnAboutFusionID(devVK, fid),
+    StateChange_LearnFusionSecret(devVK, fid, ~fusionSecret)
+    ]-&gt;
+    [ !FusionID(fid)
+    , !State_IsInFusionID(devVK, fid, devVK)
+    , !State_KnowsFusionID(devVK, fid)
+    , !State_KnowsFusionSecret(devVK, fid, ~fusionSecret)
+    , Out(signedInitMsg)
+     ]
+
+rule ReceiveInitMsg:
+    let
+        initorVK = pk(initorSK)
+        msg = &lt;'init', initorVK, fid&gt;
+        signedInitMsg = &lt;msg, sign(msg, initorSK)&gt;
+    in
+    [   !Device(initorVK)
+    ,   !Device(rcptVK)
+    ,   In(signedInitMsg) ]
+    --[
+        StateChange_LearnAboutFusionID(rcptVK, fid),
+        StateChange_AddToFusionID(rcptVK, fid, initorVK)
+    ]-&gt;
+    [
+        !State_KnowsFusionID(rcptVK, fid),
+        !State_IsInFusionID(rcptVK, fid, initorVK)
+    ]
+
+rule SendInvite:
+    let
+      InvrVK     = pk(InvrSK)
+      //
+      invTxt     = &lt;'invite', fid, InvrVK, InveeVK&gt;
+      sig        = sign(invTxt, InvrSK) 
+      invitation = &lt;invTxt, sig&gt;
+    in
+    [ 
+        In(InveeVK),
+        !State_KnowsFusionID(InvrVK, fid),
+        !State_IsInFusionID(InvrVK, fid, InvrVK),   // might not matter. what really matters is whether recipient knows Invr is in Fid
+        !Device(InvrVK),
+        In(InveeVK)
+    ]
+  --[
+      InviteSent(fid, InvrVK, InveeVK),
+      StateChange_IsInvited(InvrVK, fid, InveeVK)
+    ]-&gt;
+    [
+      Out(invitation),
+      State_IsInvited(InvrVK, fid, InveeVK)
+    ]
+
+rule ReceiveInvite:
+    let
+      InvrVK = pk(InvrSK)
+      //
+      invTxt     = &lt;'invite', fid, InvrVK, InveeVK&gt;
+      sig        = sign(invTxt, InvrSK) 
+      invitation = &lt;invTxt, sig&gt;
+    in
+    [
+        !FusionID(fid),
+        !Device(InvrVK),
+        !Device(rcptVK),
+        !State_IsInFusionID(rcptVK, fid, InvrVK),
+        In(invitation)
+    ]
+  --[
+      StateChange_IsInvited(rcptVK, fid, InveeVK),
+      InvitedBy(InvrVK),
+      NotEqual(InvrVK, InveeVK)
+    ]-&gt; 
+    [
+      State_IsInvitedBy(rcptVK, fid, InveeVK, InvrVK)
+    ]
+
+rule AcceptInvite:
+    let
+      InvrVK = pk(InvrSK)
+      InveeVK = pk(InveeSK)
+      //
+      acceptTxt = &lt;'accept', fid, InveeVK&gt;
+      acceptSig = sign(acceptTxt, InveeSK)
+      acceptMsg = &lt;acceptTxt, acceptSig&gt;
+    in
+    [
+        !FusionID(fid),
+        !Device(InvrVK),
+        !Device(InveeVK),
+        State_IsInvitedBy(InveeVK, fid, InveeVK, InvrVK),
+        !State_IsInFusionID(InveeVK, fid, InvrVK)
+    ]
+  --[
+        StateChange_IsInvited(InveeVK, fid, InveeVK),
+        StateChange_ConsentedToFusionID(InveeVK, fid, InveeVK),
+        InvitedBy(InvrVK)
+    ]-&gt;
+    [
+        State_ConsentsToFusionIDBy(InveeVK, fid, InveeVK, InvrVK),
+        Out(acceptMsg)
+    ]
+    
+rule ReceiveAccept:
+    let
+      InveeVK   = pk(InveeSK)
+      //
+      acceptTxt = &lt;'accept', fid, InveeVK&gt;
+      acceptSig = sign(acceptTxt, InveeSK)
+      acceptMsg = &lt;acceptTxt, acceptSig&gt;
+    in
+    [
+        In(acceptMsg),
+        !Device(InveeVK),
+        !Device(InvrVK),
+        !Device(rcptVK),
+        State_IsInvitedBy(rcptVK, fid, InveeVK, InvrVK)
+    ]
+  --[
+      StateChange_ConsentedToFusionID(rcptVK, fid, InveeVK)
+    ]-&gt; 
+    [
+      State_ConsentsToFusionIDBy(rcptVK, fid, InveeVK, InvrVK) // recipient stores Invee's Consent to FID from the Invite By Invr 
+    ]
+
+rule SendEntrust:
+/*{
+  type: 'fusion/entrust',
+  secretKey: KEY, // make this consistent
+  fusionRoot: %init,
+  recps: [@fusionA, @feedDesktop]
+}*/
+  let
+      InvrVK     = pk(InvrSK)
+      InveeVK    = pk(InveeSK)
+      fid        = pk(fusionSecret)
+      //
+      entrustPlain     = &lt;'entrust', fid, InvrVK, fusionSecret&gt;
+      entrustEncrypted = aenc(entrustPlain, InveeVK)
+      entrustSig       = sign(entrustEncrypted, InvrSK)
+      outMsg           = &lt;entrustEncrypted, entrustSig&gt;
+    in
+    [ !Device(InvrVK)
+    , !FusionID(fid)
+    , State_ConsentsToFusionIDBy(InvrVK, fid, InveeVK, InvrVK)
+    , !State_IsInFusionID(InvrVK, fid, InvrVK)
+    , !State_KnowsFusionSecret(InvrVK, fid, fusionSecret)
+    ]
+  --[
+      EntrustSent(fid, InvrVK, InveeVK),
+      
+      StateChange_MarkingEntrusted(InvrVK, fid, InveeVK)
+    ]-&gt;
+    [
+      Out(outMsg),
+      State_IsEntrusted(InvrVK, fid, InveeVK)
+  ]
+
+
+rule SendProofOfKey:
+/*{
+  type: fusion/proof-of-key,
+  consentId: %consent,
+  proof: sign(%consent + 'fusion/proof-of-key')
+  tangles: {
+    fusion: { root, previous }
+  }
+}*/
+let
+      InvrVK     = pk(InvrSK)
+      InveeVK    = pk(InveeSK)
+      fid        = pk(fusionSecret)
+      //
+      entrustPlain     = &lt;'entrust', fid, InvrVK, fusionSecret&gt;
+      entrustEncrypted = aenc(entrustPlain, InveeVK)
+      entrustSig       = sign(entrustEncrypted, InvrSK)
+      inMsg            = &lt;entrustEncrypted, entrustSig&gt;
+      //
+      pok_inner       = &lt;'pok_inner', InveeVK, fid&gt;
+      pok_inner_sig   = sign(pok_inner, fusionSecret)
+      pok_outer       = &lt;'pok', pok_inner_sig&gt;
+      pok_outer_sig   = sign(pok_outer, InveeSK)
+      pok             = &lt;pok_outer, pok_outer_sig&gt;
+in
+[
+    !FusionID(fid),
+    In(inMsg),
+    !Device(InvrVK),
+    !Device(InveeVK)
+] --[
+    AddedByInvitation(InvrVK),
+    StateChange_ProvidedProofOfKey(InveeVK, fid),
+    StateChange_AddToFusionID(InveeVK, fid, InveeVK),
+    StateChange_LearnFusionSecret(InveeVK, fid, fusionSecret)
+    ]-&gt;
+[
+    Out(pok)
+    , !State_IsInFusionID(InveeVK, fid, InveeVK)
+    , !State_KnowsFusionSecret(InveeVK, fid, fusionSecret)
+]
+
+rule ReceiveProofOfKey:
+let
+      InveeVK    = pk(InveeSK)
+      fid        = pk(fusionSecret)
+      //
+      pok_inner       = &lt;'pok_inner', InveeVK, fid&gt;
+      pok_inner_sig   = sign(pok_inner, fusionSecret)
+      pok_outer       = &lt;'pok', pok_inner_sig&gt;
+      pok_outer_sig   = sign(pok_outer, InveeSK)
+      pok             = &lt;pok_outer, pok_outer_sig&gt;
+in
+    [ In(pok)
+    , !Device(RcvrVK)
+    , !Device(InveeVK)
+    , !Device(InvrVK)
+    ]
+  --[ StateChange_AddToFusionID(RcvrVK, fid, InveeVK) ]-&gt;
+    [ !State_IsInFusionID(RcvrVK, fid, InveeVK)
+    ]
+
+
+/*{
+  type: 'fusion/tombstone',
+  reason: 'Lost @feedPhone, state of key is unknown',
+  tangles: {
+    fusion: {
+      root: %init,
+      previous: [%consent]
+    }
+  }
+}
+RULES:
+
+you cannot undo a tombstone
+once a tombstone has been published, the only messages which are allowed 
+to extend the tangle are other tombstone messages
+you MUST NOT DM a tombstoned identity
+NOTE:
+
+tangles can have divergent state (many tips to the graph). 
+We consider a tangle tombstoned if any of the tips are a tombstone message
+*/
+
+rule SendTombstone:
+let 
+  fid               = pk(fusionSecret)
+  TomberVK          = pk(TomberSK)
+  tombstone_message = &lt;'tombstoned', fid, TomberVK&gt; 
+  sig = sign(tombstone_message, TomberSK)
+  msg = &lt;tombstone_message, sig&gt;
+in
+[
+  !Device(TomberVK),
+  !State_IsInFusionID(TomberVK, fid, TomberVK)
+]
+--[
+  StateChange_FID_Tombstoned(TomberVK, fid, TomberVK)
+]-&gt;
+[
+  Out(msg),
+  !State_IsTombstoned(TomberVK, fid, TomberVK)
+]
+
+
+rule ReceiveTombstone:
+let
+  fid       = pk(fusionSecret)
+  TomberVK  = pk(TomberSK)
+  RecvVK    = pk(RecvSK)
+  tombstone_message = &lt;'tombstoned', fid, TomberVK&gt;
+  sig = sign(tombstone_message, TomberSK)
+  signed_msg = &lt;tombstone_message, sig&gt;
+in
+[
+  In(signed_msg),
+  !Device(TomberVK),
+  !Device(RecvVK),
+  !State_IsInFusionID(RecvVK, fid, TomberVK)
+]
+--[
+  StateChange_FID_Tombstoned(RecvVK, fid, TomberVK)
+]-&gt;
+[
+  !State_IsTombstoned(RecvVK, fid, TomberVK)
+]
+
+
+rule SendRedirect:
+let
+  oldFID = pk(fusionSecret)
+  newFID = pk(~newFusionSecret)
+  SenderVK = pk(SenderSK)
+  //
+  redirectBody = &lt;'redirect', SenderVK, oldFID, newFID&gt;
+  redirectSig  = sign(redirectBody, SenderSK)
+  redirect      = &lt;redirectBody, redirectSig&gt;
+in
+[
+  !Device(SenderVK),
+  !State_IsInFusionID(SenderVK, oldFID, SenderVK),
+  !State_IsInFusionID(SenderVK, newFID, SenderVK),
+  !State_IsTombstoned(SenderVK, oldFID, SenderVK)  // this might not be actually how the protocol works, since the redirect is an independent tangle
+]
+--[
+  !StateChange_SendRedirect(SenderVK, oldFID, newFID)
+]-&gt;
+[
+  Out(redirect),
+  !State_RedirectSent(SenderVK, oldFID, newFID)
+]
+
+rule ReceiveRedirect:
+let
+  SenderVK = pk(SenderSK)
+  //
+  redirectBody = &lt;'redirect', SenderVK, oldFID, newFID&gt;
+  redirectSig  = sign(redirectBody, SenderSK)
+  redirect      = &lt;redirectBody, redirectSig&gt;
+in
+[ !Device(RcvrVK)
+, !Device(SenderVK)
+, !State_IsInFusionID(RcvrVK, oldFID, SenderVK)
+, !State_IsInFusionID(RcvrVK, newFID, SenderVK)
+, In(redirect)
+]
+--[ 
+  StateChange_RedirectReceived(RcvrVK, oldFID, newFID, SenderVK)
+]-&gt;
+[ State_RedirectHintReceived(RcvrVK, oldFID, newFID, SenderVK)
+]
+
+// attestationPosition is either "accept" or "reject"
+// tombstoning attestations is not modelled because we are not sure it's a good idea
+rule AttestRedirect:
+let
+  AttestorVK = pk(AttestorSK)
+  //
+  attestationBody = &lt;'attest', AttestorVK, oldFID, newFID, attestationPosition&gt;
+  attestationSig  = sign(attestationBody, AttestorSK)
+  attestation      = &lt;attestationBody, attestationSig&gt;
+in
+[ !Device(AttestorVK)
+, !State_IsInFusionID(AttestorVK, oldFID, SenderVK)
+, !State_IsInFusionID(AttestorVK, newFID, SenderVK)
+, State_RedirectHintReceived(AttestorVK, oldFID, newFID, SenderVK)
+, In(attestationPosition)
+]
+--[
+    StateChange_RedirectAttested(AttestorVK, oldFID, newFID, SenderVK, attestationPosition)
+]-&gt;
+[ Out(attestation)
+, State_RedirectAttested(AttestorVK, oldFID, newFID, AttestorVK, attestationPosition)
+]
+
+
+/// RESTRICTIONS
+
+/// not needed if we check signatures pattern-matching style:
+//  restriction only_valid_signatures:
+//  For all traces that contain trace facts Signed(sig, txt, pk), only consider those traces, where verify(sig, txt, pk) returns true
+
+// for all sent invites, there does not exist an addtofusionid fact from before the invite was sent
+restriction dont_invite_members:
+    "All Invr Invee fid #tInvite.
+        InviteSent(fid, Invr, Invee) @ #tInvite ==&gt; (
+            not Ex #tAddTo. (
+                StateChange_AddToFusionID(Invr, fid, Invee) @ #tAddTo &amp;
+                #tAddTo &lt; #tInvite
+            )
+        )"
+
+restriction enforce_not_equal:
+    "All left right #time. NotEqual(left, right) @ #time ==&gt; not (left = right)"
+
+restriction enforce_attestation_position:
+    "All Attestor oldFid newFid SenderVK attestationPosition #i.
+       StateChange_RedirectAttested(Attestor, oldFid, newFid, SenderVK, attestationPosition) @ #i ==&gt; (
+         attestationPosition = 'accept' | attestationPosition = 'reject')"
+
+restriction receive_init_only_once:
+    "All fid devA devB #i #j. (
+        StateChange_AddToFusionID(devA, fid, devB) @ #i &amp;
+        StateChange_AddToFusionID(devA, fid, devB) @ #j
+        ) ==&gt; #i = #j"
+
+/// FORALL-TRACE LEMMAS (security)
+
+
+// lemma to prove the conditions underwhich fusionSecret is actually secret
+lemma fusion_secret_secrecy:
+// there do not exist
+"not (Ex initor fid fusionSecret #init #learn.
+    // a fusion id `fid` and matching secret `fusionSecret`
+    InitFusionID(fid, initor, fusionSecret) @ #init        &amp;
+    // and the adversary knows the secret
+    K(fusionSecret) @ #learn                               &amp;
+    // and neither the initiator
+    not (Ex #lose. LoseDevice(initor) @ #lose) &amp;
+    // nor a party the key was legally entrusted to lost their keys
+    not (Ex anyEntruster anyEntrustee #entrust #lose.
+        EntrustSent(fid, anyEntruster, anyEntrustee) @ #entrust &amp;
+        LoseDevice(anyEntrustee) @ #lose
+    )
+)"
+
+// Invee has been added to the fusion ==&gt; Ex Inver. Inver is in the fid AND ( Inver invited invee OR Inver was hacked)
+lemma membership_soundness:
+"All Invee Invr fid #added.
+    (
+        StateChange_AddToFusionID(Invee, fid, Invee) @ #added &amp;
+        AddedByInvitation(Invr)                      @ #added
+    ) ==&gt; (
+        // case 1: proper invitation flow
+        (Ex #invrAdded #invite.
+            StateChange_AddToFusionID(Invr, fid, Invr) @ #invrAdded &amp;
+            InviteSent(fid, Invr, Invee) @ #invite &amp;
+            #invite &lt; #added
+        ) |
+        // case 2: the attacker takes over a member
+        (Ex fusionSecret #lose  #learn.
+            LoseDevice(Invr) @ #lose &amp;
+            StateChange_LearnFusionSecret(Invr, fid, fusionSecret) @ #learn &amp;
+            #learn &lt; #added
+        ) |
+        // case 3: the attacker stole a device that was entrusted the secret and steals some other device to send the entrust from
+        (Ex anyone secretHolder #invrLose #fusionSecretLose #entrust.
+            LoseDevice(Invr) @ #invrLose &amp;
+            EntrustSent(fid, anyone, secretHolder) @ #entrust &amp;
+            LoseDevice(secretHolder) @ #fusionSecretLose &amp;
+            #invrLose &lt; #added &amp;
+            #fusionSecretLose &lt; #added
+        )
+    )"
+
+// for all tombstone messages received, the signer of the message was in the fusionID or the device was lost
+lemma tombstone_authorization:
+"All fid rcvr sender #received  #joined.
+  (
+    (
+        StateChange_AddToFusionID(rcvr, fid, sender)          @ #joined     &amp;  // rcvr knows sender is in FID
+        StateChange_FID_Tombstoned(rcvr, fid, sender)         @ #received   &amp;  // msg received
+        not (sender = rcvr)
+    ) ==&gt; (
+        (Ex #tombstoned.
+            StateChange_FID_Tombstoned(sender, fid, sender)   @ #tombstoned &amp;  // sender tombstones
+            #joined &lt; #received &amp;
+            #tombstoned &lt; #received
+        ) |
+        (Ex #lose.
+            LoseDevice(sender) @ #lose &amp;
+            #lose &lt; #received
+        )
+    )
+)"
+
+
+lemma only_accept_when_invited:
+     "All Inver Invee fid #accept. (
+        StateChange_ConsentedToFusionID(Invee, fid, Invee) @ #accept &amp;
+        InvitedBy(Inver) @ #accept
+    ) ==&gt; (
+        (Ex #send. 
+            InviteSent(fid, Inver, Invee) @ #send &amp;
+            #send &lt; #accept
+        ) | (Ex #lost.
+            LoseDevice(Inver) @ #lost &amp;
+            #lost &lt; #accept
+        )
+    )"
+
+lemma key_is_entrusted_only_to_consenting_devices:
+// for all devices, only devices that have consented to the fusion ID are entrusted with the key
+"All Entruster Entrustee fid #txEntrust. (
+    ( 
+        StateChange_MarkingEntrusted(Entruster, fid,  Entrustee) @ #txEntrust &amp;
+        not (Ex #loseDevice. 
+            LoseDevice(Entruster) @ #loseDevice &amp;
+            #loseDevice &lt; #txEntrust
+        )
+    ) ==&gt; (Ex #rxConsent.
+        StateChange_ConsentedToFusionID(Entruster, fid, Entrustee) @ #rxConsent &amp;
+        #rxConsent &lt; #txEntrust
+    )
+)"
+
+/// EXISTS-TRACE LEMMAS (model sanity)
+
+lemma device_can_see_other_memberships: exists-trace
+    "Ex devA devB fid #addA.
+        StateChange_AddToFusionID(devA, fid, devB) @ #addA &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+        
+lemma device_can_invite: exists-trace
+    "Ex devA devB fid #addA #addB.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        StateChange_IsInvited(devA, fid, devB) @ #addB &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+        
+lemma device_can_be_invited: exists-trace
+    "Ex devA devB fid #addA #addB.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        StateChange_IsInvited(devB, fid, devB) @ #addB &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+        
+lemma device_can_send_accept: exists-trace
+    "Ex devA devB fid #addA #addB.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        StateChange_ConsentedToFusionID(devB, fid, devB) @ #addB &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+        
+lemma device_can_receive_accept: exists-trace
+    "Ex devA devB fid #addA #addB.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        StateChange_ConsentedToFusionID(devA, fid, devB) @ #addB &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+
+lemma device_can_send_entrust: exists-trace
+    "Ex devA devB fid #addA #entrust.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        EntrustSent(fid, devA, devB) @ #entrust &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+
+lemma fusion_id_has_two_devices: exists-trace
+    "Ex devA devB fid #addA #addB.
+        StateChange_AddToFusionID(devA, fid, devA) @ #addA &amp;
+        StateChange_AddToFusionID(devA, fid, devB) @ #addB &amp;
+        not devA=devB &amp;
+        not (Ex #lose. LoseDevice(devA) @ #lose) &amp;
+        not (Ex #lose. LoseDevice(devB) @ #lose)"
+
+lemma fusion_id_can_be_tombstoned: exists-trace
+    "Ex dev fid #tombstoned.
+      StateChange_FID_Tombstoned(dev, fid, dev) @ #tombstoned
+    "
+
+
+lemma tombstoning_by_someone_else_than_initor_works: exists-trace
+    "Ex devInit devTomb fid secret #tombstoned #init.
+        StateChange_AddToFusionID(devInit, fid, devInit) @ #init       &amp;
+        InitFusionID(fid, devInit, secret) @ #init                     &amp;
+        StateChange_FID_Tombstoned(devTomb, fid, devTomb) @ #tombstoned &amp;
+        not (
+            devInit = devTomb |
+            (Ex anyDev #lose. LoseDevice(anyDev) @ #lose)
+        )                                                              &amp;
+        #init &lt; #tombstoned
+    "
+
+lemma device_can_observe_tombstoning_by_someone_else_than_initor: exists-trace
+    "Ex devInit devTomb devObs fid secret #tombstoned #init.
+        StateChange_AddToFusionID(devInit, fid, devInit) @ #init       &amp;
+        InitFusionID(fid, devInit, secret) @ #init                     &amp;
+        StateChange_FID_Tombstoned(devObs, fid, devTomb) @ #tombstoned &amp;
+        not (
+            devInit = devTomb | devTomb = devObs |
+            (Ex anyDev #lose. LoseDevice(anyDev) @ #lose)
+        )                                                              &amp;
+        #init &lt; #tombstoned
+    "
+
+lemma device_can_observe_accept_attestation: exists-trace
+    "Ex AttestorVK SenderVK oldFID newFID #i.
+        StateChange_RedirectAttested(AttestorVK, oldFID, newFID, SenderVK, 'accept') @ #i &amp;
+        not SenderVK = AttestorVK
+    "
+
+end
+</code></pre></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity" title="Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity">Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity</a><ul class="nav">
+<li><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li><a href="#Summary--Gist" title="Summary / Gist">Summary / Gist</a></li>
+<li><a href="#Partial-Replication" title="Partial Replication">Partial Replication</a></li>
+<li><a href="#Fusion-Identity-Protocol" title="Fusion Identity Protocol">Fusion Identity Protocol</a><ul class="nav">
+<li><a href="#Description" title="Description">Description</a></li>
+<li><a href="#Formal-Analysis" title="Formal Analysis">Formal Analysis</a></li>
+<li><a href="#Observations" title="Observations">Observations</a></li>
+</ul>
+</li>
+<li><a href="#Implementation-Considerations" title="Implementation Considerations">Implementation Considerations</a><ul class="nav">
+<li><a href="#Observations1" title="Observations">Observations</a></li>
+</ul>
+</li>
+<li><a href="#Future-Work" title="Future Work">Future Work</a></li>
+<li><a href="#Issues" title="Issues">Issues</a><ul class="nav">
+<li><a href="#Issue-A-Specification-Is-Not-Precise-Enough" title="Issue A: Specification Is Not Precise Enough">Issue A: Specification Is Not Precise Enough</a></li>
+<li><a href="#Issue-B-No-Forward-Secrecy" title="Issue B: No Forward Secrecy">Issue B: No Forward Secrecy</a></li>
+</ul>
+</li>
+<li><a href="#Suggestions" title="Suggestions">Suggestions</a><ul class="nav">
+<li><a href="#Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects" title="Suggestion A: Explore Protocol Extension for Authentication for Redirects">Suggestion A: Explore Protocol Extension for Authentication for Redirects</a></li>
+<li><a href="#Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys" title="Suggestion B: There are no Recommendations for how to Protect Private Keys">Suggestion B: There are no Recommendations for how to Protect Private Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#Appendix" title="Appendix">Appendix</a><ul class="nav">
+<li><a href="#Appendix-A-Source-Code-of-Sequence-Diagram" title="Appendix A: Source Code of Sequence Diagram">Appendix A: Source Code of Sequence Diagram</a></li>
+<li><a href="#Appendix-B-Tamarin-Source-Code" title="Appendix B: Tamarin Source Code">Appendix B: Tamarin Source Code</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#Audit-Report-Secure-Scuttlebutt-Partial-Replication-and-Fusion-Identity" title="Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity">Audit Report: Secure Scuttlebutt Partial Replication and Fusion Identity</a><ul class="nav">
+<li><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li><a href="#Summary--Gist" title="Summary / Gist">Summary / Gist</a></li>
+<li><a href="#Partial-Replication" title="Partial Replication">Partial Replication</a></li>
+<li><a href="#Fusion-Identity-Protocol" title="Fusion Identity Protocol">Fusion Identity Protocol</a><ul class="nav">
+<li><a href="#Description" title="Description">Description</a></li>
+<li><a href="#Formal-Analysis" title="Formal Analysis">Formal Analysis</a></li>
+<li><a href="#Observations" title="Observations">Observations</a></li>
+</ul>
+</li>
+<li><a href="#Implementation-Considerations" title="Implementation Considerations">Implementation Considerations</a><ul class="nav">
+<li><a href="#Observations1" title="Observations">Observations</a></li>
+</ul>
+</li>
+<li><a href="#Future-Work" title="Future Work">Future Work</a></li>
+<li><a href="#Issues" title="Issues">Issues</a><ul class="nav">
+<li><a href="#Issue-A-Specification-Is-Not-Precise-Enough" title="Issue A: Specification Is Not Precise Enough">Issue A: Specification Is Not Precise Enough</a></li>
+<li><a href="#Issue-B-No-Forward-Secrecy" title="Issue B: No Forward Secrecy">Issue B: No Forward Secrecy</a></li>
+</ul>
+</li>
+<li><a href="#Suggestions" title="Suggestions">Suggestions</a><ul class="nav">
+<li><a href="#Suggestion-A-Explore-Protocol-Extension-for-Authentication-for-Redirects" title="Suggestion A: Explore Protocol Extension for Authentication for Redirects">Suggestion A: Explore Protocol Extension for Authentication for Redirects</a></li>
+<li><a href="#Suggestion-B-There-are-no-Recommendations-for-how-to-Protect-Private-Keys" title="Suggestion B: There are no Recommendations for how to Protect Private Keys">Suggestion B: There are no Recommendations for how to Protect Private Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#Appendix" title="Appendix">Appendix</a><ul class="nav">
+<li><a href="#Appendix-A-Source-Code-of-Sequence-Diagram" title="Appendix A: Source Code of Sequence Diagram">Appendix A: Source Code of Sequence Diagram</a></li>
+<li><a href="#Appendix-B-Tamarin-Source-Code" title="Appendix B: Tamarin Source Code">Appendix B: Tamarin Source Code</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
