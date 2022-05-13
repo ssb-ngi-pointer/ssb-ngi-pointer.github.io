@@ -3,22 +3,22 @@
 ## Rooms 2.0
 
 - [Rooms 2.0 specification](https://ssbc.github.io/rooms2)
-- [SSB URIs specification](https://github.com/ssb-ngi-pointer/ssb-uri-spec)
+- [SSB URIs specification](https://github.com/ssb-ngi-pointer/ssb-uri-spec-archived)
 - [SSB HTTP Invites specification](https://ssbc.github.io/ssb-http-invite-spec)
 - [SSB HTTP Authentication specification](https://ssbc.github.io/ssb-http-auth-spec)
 
 ## Meta feeds
 
-- [Meta feeds specification](https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec)
+- [Meta feeds specification](https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec-archived)
 - [Bendy butt](https://github.com/ssb-ngi-pointer/bendy-butt-spec) (meta feeds feed format)
   - Uses [SSB binary field encodings (SSB-BFE)](https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings-spec)
-- [Using meta feeds for partial replication](https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec)
-  - Using [Subset replication RPCs](https://github.com/ssb-ngi-pointer/ssb-subset-replication-spec)
+- [Using meta feeds for partial replication](https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec-archived)
+  - Using [Subset replication RPCs](https://github.com/ssb-ngi-pointer/ssb-subset-replication-spec-archived)
 
 Other usages of meta feeds:
 
 - [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec)
-- [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec)
+- [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec-archived)
 
 ## External audits and research
 
