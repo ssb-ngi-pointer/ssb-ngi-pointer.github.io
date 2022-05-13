@@ -9,7 +9,7 @@
 
 ## Meta feeds
 
-- [Meta feeds specification](https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec-archived)
+- [Meta feeds specification](https://github.com/ssb-ngi-pointer/ssb-meta-feeds-spec-archived)
 - [Bendy butt](https://github.com/ssb-ngi-pointer/bendy-butt-spec) (meta feeds feed format)
   - Uses [SSB binary field encodings (SSB-BFE)](https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings-spec)
 - [Using meta feeds for partial replication](https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec-archived)
