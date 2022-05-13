@@ -2,10 +2,10 @@
 
 ## Rooms 2.0
 
-- [Rooms 2.0 specification](https://ssb-ngi-pointer.github.io/rooms2)
+- [Rooms 2.0 specification](https://ssbc.github.io/rooms2)
 - [SSB URIs specification](https://github.com/ssb-ngi-pointer/ssb-uri-spec)
-- [SSB HTTP Invites specification](https://ssb-ngi-pointer.github.io/ssb-http-invite-spec)
-- [SSB HTTP Authentication specification](https://ssb-ngi-pointer.github.io/ssb-http-auth-spec-archived)
+- [SSB HTTP Invites specification](https://ssbc.github.io/ssb-http-invite-spec)
+- [SSB HTTP Authentication specification](https://ssbc.github.io/ssb-http-auth-spec)
 
 ## Meta feeds
 
