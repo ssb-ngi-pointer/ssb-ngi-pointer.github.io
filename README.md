@@ -10,14 +10,14 @@
 ## Meta feeds
 
 - [Meta feeds specification](https://github.com/ssb-ngi-pointer/ssb-meta-feeds-spec-archived)
-- [Bendy butt](https://github.com/ssb-ngi-pointer/bendy-butt-spec) (meta feeds feed format)
-  - Uses [SSB binary field encodings (SSB-BFE)](https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings-spec)
+- [Bendy butt](https://github.com/ssb-ngi-pointer/bendy-butt-spec-archived) (meta feeds feed format)
+  - Uses [SSB binary field encodings (SSB-BFE)](https://github.com/ssb-ngi-pointer/ssb-bfe-spec-archived)
 - [Using meta feeds for partial replication](https://github.com/ssb-ngi-pointer/ssb-secure-partial-replication-spec-archived)
   - Using [Subset replication RPCs](https://github.com/ssb-ngi-pointer/ssb-subset-replication-spec-archived)
 
 Other usages of meta feeds:
 
-- [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec)
+- [Fusion identity](https://github.com/ssb-ngi-pointer/fusion-identity-spec-archived)
 - [Network identity](https://github.com/ssb-ngi-pointer/ssb-network-identity-spec-archived)
 
 ## External audits and research
